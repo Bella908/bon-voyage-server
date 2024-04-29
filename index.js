@@ -70,16 +70,30 @@ async function run() {
     })
 
 
-    app.get("/showList/update/:_id", async (req, res) => {
+    app.put("/showList/update/:_id", async (req, res) => {
       const id = req.params._id; // Use req.params._id to access the _id parameter
       const query = { _id: new ObjectId(id) };
-      const result = await spotCollection.findOne(query);
+      const data = {
+        $set:{
+          tourists_spot_name:req.body.tourists_spot_name,
+          country_Name:req.body.country_Name,
+          location:req.body.location,
+          average_cost:req.body.average_cost,
+          short_description:req.body.short_description,
+          seasonality:req.body.seasonality,
+          travel_time:req.body.travel_time,
+          totaVisitorsPerYear:req.body.totaVisitorsPerYear,
+          image:req.body.image,
+         
+        }
+      }
+      const result = await spotCollection.updateOne(query ,data);
       console.log(result);
       res.send(result);
   });
 
+   
 
-  
   
 
     
