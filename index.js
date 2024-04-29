@@ -63,6 +63,13 @@ app.get("/showList/:email" ,async(req,res)=>{
  })
 
 
+ app.delete("/delete/:id",)async(req,res)=>{
+  console.log(req.params._id);
+ const result = await spotCollection.findOne({_id:new ObjectId( req.params._id)});
+console.log(result)
+res.send(result)
+})
+
     
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
