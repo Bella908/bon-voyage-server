@@ -70,12 +70,17 @@ async function run() {
     })
 
 
-    app.delete("/showList/update/:_id", async (req, res) => {
-      const id = req.params.id;
-      const result = await spotCollection.deleteOne({ _id: new ObjectId(id) });
-      console.log(result)
-      res.send(result)
-    })
+    app.get("/showList/update/:_id", async (req, res) => {
+      const id = req.params._id; // Use req.params._id to access the _id parameter
+      const query = { _id: new ObjectId(id) };
+      const result = await spotCollection.findOne(query);
+      console.log(result);
+      res.send(result);
+  });
+
+
+  
+  
 
     
 
