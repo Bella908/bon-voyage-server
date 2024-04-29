@@ -63,9 +63,9 @@ app.get("/showList/:email" ,async(req,res)=>{
  })
 
 
- app.delete("/delete/:id",)async(req,res)=>{
-  console.log(req.params._id);
- const result = await spotCollection.findOne({_id:new ObjectId( req.params._id)});
+ app.delete("/showList/delete/:_id", async(req,res)=>{
+  
+ const result = await spotCollection.deleteOne({_id:new ObjectId( req.params._id)});
 console.log(result)
 res.send(result)
 })
