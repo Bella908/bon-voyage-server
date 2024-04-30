@@ -48,7 +48,7 @@ async function run() {
 
     app.get("/showList/:email", async (req, res) => {
       // const newSpot = req.body;
-      console.log(req.params.email);
+      
       const result = await spotCollection.find({ email: req.params.email }).toArray();
       // const result = await spotCollection.insertOne(newSpot);
       res.send(result);
@@ -56,6 +56,21 @@ async function run() {
 
 
     app.get("/viewDetails/:_id", async (req, res) => {
+     
+      const result = await spotCollection.findOne({ _id: new ObjectId(req.params._id) });
+      
+      res.send(result)
+    })
+
+
+    app.delete("/showList/delete/:_id", async (req, res) => {
+      const result = await spotCollection.deleteOne({ _id: new ObjectId(req.params._id) });
+
+      res.send(result)
+    })
+
+
+    app.get("/showList/update/:_id", async (req, res) => {
       console.log(req.params._id);
       const result = await spotCollection.findOne({ _id: new ObjectId(req.params._id) });
       console.log(result)
@@ -63,15 +78,9 @@ async function run() {
     })
 
 
-    app.delete("/showList/delete/:_id", async (req, res) => {
-      const result = await spotCollection.deleteOne({ _id: new ObjectId(req.params._id) });
-      console.log(result)
-      res.send(result)
-    })
-
-
     app.put("/showList/update/:_id", async (req, res) => {
-      const id = req.params._id; // Use req.params._id to access the _id parameter
+      const id = req.params._id;
+     
       const query = { _id: new ObjectId(id) };
       const data = {
         $set:{
@@ -88,7 +97,7 @@ async function run() {
         }
       }
       const result = await spotCollection.updateOne(query ,data);
-      console.log(result);
+     console.log(result);
       res.send(result);
   });
 
