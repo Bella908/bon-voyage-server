@@ -26,7 +26,8 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
+    const countryCollection = client.db('bonVoyageDB').collection('Contries');
 
     const spotCollection = client.db('bonVoyageDB').collection('spot');
 
@@ -36,6 +37,27 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     })
+
+    
+    app.get('/countries', async (req, res) => {
+      const cursor = countryCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+
+    app.get('/countries/:country_Name', async (req, res) => {
+      try {
+          const cursor = spotCollection.find({ country_Name: req.params.country_Name });
+          const result = await cursor.toArray();
+          res.send(result);
+      } catch (error) {
+          console.error("Error fetching subcountries:", error);
+          res.status(500).send("Internal Server Error");
+      }
+  });
+  
+    
 
 
 
