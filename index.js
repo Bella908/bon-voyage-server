@@ -38,6 +38,29 @@ async function run() {
       res.send(result);
     })
 
+
+    app.get('/services', async (req, res) => {
+      const filter = req.query;
+      console.log(filter);
+      const query = {
+          // price: { $lt: 150, $gt: 50 }
+          // db.InspirationalWomen.find({first_name: { $regex: /Harriet/i} })
+          title: {$regex: filter.search, $options: 'i'}
+      };
+
+      const options = {
+          sort: {
+            average_cost: filter.sort === 'asc' ? 1 : -1
+          }
+      };
+
+      const cursor = spotCollection.find(query, options);
+      const result = await cursor.toArray();
+      res.send(result);
+  })
+
+
+
     
     app.get('/countries', async (req, res) => {
       const cursor = countryCollection.find();
