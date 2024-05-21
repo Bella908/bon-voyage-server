@@ -8,7 +8,13 @@ const port = process.env.PORT || 5000;
 
 
 
-app.use(cors());
+app.use(cors(
+  {
+    origin :['https://aquamarine-lolly-14003a.netlify.app'],
+    credentials: true,
+    optionSuccessStatus: 200,
+  }
+));
 app.use(express.json());
 
 
